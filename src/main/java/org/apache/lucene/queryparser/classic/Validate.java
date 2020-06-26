@@ -1,16 +1,24 @@
-package ValidateQuery.classic;
+package org.apache.lucene.queryparser.classic;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 
-
-// TODO: Clean up the code
+// TODO: Default ParseException
+// TODO: Clean up the code :- Done
 // TODO: Check line change :- No line change, defaulted to one, hence useless
 // TODO: Error response update :- Done
+// TODO: Add utility for mapping :- Done
 public class Validate {
     private static final QueryParser queryParser = new QueryParser("*", new StandardAnalyzer());
 
+    public void setMapping(Mapping mapping){
+        if(mapping == null){
+            mapping = new Mapping();
+        }
+        mapping.fields.add("*");
+        queryParser.setMapping(mapping);
+    }
 
-    public static ValidateResult validateQuery(String query){
+    public ValidateResult validateQuery(String query){
         try{
             queryParser.parse(query);
         }
@@ -19,11 +27,21 @@ public class Validate {
 
             if(e.getMessage().equals("Syntax Error") || e.getMessage().equals("Lexical Error")){
                 builder.type(e.getMessage())
-                        .query(query)
-                        .errorToken(e.currentToken.next == null ? null : e.currentToken.next.image)
-                        .validToken(e.currentToken.image)
-                        .errorIndex(e.currentToken.endColumn);
+                        .query(query);
+                if(e.currentToken != null) {
+                    builder.errorToken(e.currentToken.next == null ? null : e.currentToken.next.image)
+                            .validToken(e.currentToken.image)
+                            .errorIndex(e.currentToken.endColumn);
+                }
 
+            }
+            else if(e.getMessage().equals("Field Mismatch")){
+                builder.type(e.getMessage())
+                        .query(query);
+                if(e.currentToken != null){
+                    builder.errorToken(e.currentToken.image)
+                            .errorIndex(e.currentToken.endColumn);
+                }
             }
 
             if(e.getMessage().equals("Syntax Error")){

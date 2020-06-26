@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ValidateQuery.classic;
+package org.apache.lucene.queryparser.classic;
 
 import java.io.StringReader;
 import java.text.DateFormat;
@@ -38,7 +38,7 @@ import org.apache.lucene.util.automaton.RegExp;
 import static org.apache.lucene.util.automaton.Operations.DEFAULT_MAX_DETERMINIZED_STATES;
 
 /** This class is overridden by QueryParser in QueryParser.jj
- * and acts to separate the majority of the Java code from the .jj grammar file. 
+ * and acts to separate the majority of the Java code from the .jj grammar file.
  */
 public abstract class QueryParserBase extends QueryBuilder implements CommonQueryParserConfiguration {
 
@@ -153,12 +153,12 @@ public abstract class QueryParserBase extends QueryBuilder implements CommonQuer
     this.autoGeneratePhraseQueries = value;
   }
 
-   /**
+  /**
    * Get the minimal similarity for fuzzy queries.
    */
   @Override
   public float getFuzzyMinSim() {
-      return fuzzyMinSim;
+    return fuzzyMinSim;
   }
 
   /**
@@ -167,10 +167,10 @@ public abstract class QueryParserBase extends QueryBuilder implements CommonQuer
    */
   @Override
   public void setFuzzyMinSim(float fuzzyMinSim) {
-      this.fuzzyMinSim = fuzzyMinSim;
+    this.fuzzyMinSim = fuzzyMinSim;
   }
 
-   /**
+  /**
    * Get the prefix length for fuzzy queries.
    * @return Returns the fuzzyPrefixLength.
    */
@@ -488,7 +488,7 @@ public abstract class QueryParserBase extends QueryBuilder implements CommonQuer
    * @exception ParseException throw in overridden method to disallow
    */
   protected Query getFieldQuery(String field, String queryText, int slop)
-        throws ParseException {
+          throws ParseException {
     Query query = getFieldQuery(field, queryText, true);
 
     if (query instanceof PhraseQuery) {
@@ -553,12 +553,12 @@ public abstract class QueryParserBase extends QueryBuilder implements CommonQuer
     return newRangeQuery(field, part1, part2, startInclusive, endInclusive);
   }
 
- /**
-  * Builds a new BooleanClause instance
-  * @param q sub query
-  * @param occur how this clause should occur when matching documents
-  * @return new BooleanClause instance
-  */
+  /**
+   * Builds a new BooleanClause instance
+   * @param q sub query
+   * @param occur how this clause should occur when matching documents
+   * @return new BooleanClause instance
+   */
   protected BooleanClause newBooleanClause(Query q, Occur occur) {
     return new BooleanClause(q, occur);
   }
@@ -581,7 +581,7 @@ public abstract class QueryParserBase extends QueryBuilder implements CommonQuer
    */
   protected Query newRegexpQuery(Term regexp) {
     RegexpQuery query = new RegexpQuery(regexp, RegExp.ALL,
-      maxDeterminizedStates);
+            maxDeterminizedStates);
     query.setRewriteMethod(multiTermRewriteMethod);
     return query;
   }
@@ -597,7 +597,7 @@ public abstract class QueryParserBase extends QueryBuilder implements CommonQuer
     // FuzzyQuery doesn't yet allow constant score rewrite
     String text = term.text();
     int numEdits = FuzzyQuery.floatToEdits(minimumSimilarity,
-        text.codePointCount(0, text.length()));
+            text.codePointCount(0, text.length()));
     return new FuzzyQuery(term,numEdits,prefixLength);
   }
 
@@ -797,7 +797,7 @@ public abstract class QueryParserBase extends QueryBuilder implements CommonQuer
     return newPrefixQuery(t);
   }
 
-   /**
+  /**
    * Factory method for generating a query (similar to
    * {@link #getWildcardQuery}). Called when parser parses
    * an input term token that has the fuzzy suffix (~) appended.
@@ -816,7 +816,7 @@ public abstract class QueryParserBase extends QueryBuilder implements CommonQuer
   }
 
 
-   // extracted from the .jj grammar
+  // extracted from the .jj grammar
   Query handleBareTokenQuery(String qfield, Token term, Token fuzzySlop, boolean prefix, boolean wildcard, boolean fuzzy, boolean regexp) throws ParseException {
     Query q;
 
@@ -825,8 +825,8 @@ public abstract class QueryParserBase extends QueryBuilder implements CommonQuer
       q = getWildcardQuery(qfield, term.image);
     } else if (prefix) {
       q = getPrefixQuery(qfield,
-          discardEscapeChar(term.image.substring
-              (0, term.image.length()-1)));
+              discardEscapeChar(term.image.substring
+                      (0, term.image.length()-1)));
     } else if (regexp) {
       q = getRegexpQuery(qfield, term.image.substring(1, term.image.length()-1));
     } else if (fuzzy) {
@@ -838,7 +838,7 @@ public abstract class QueryParserBase extends QueryBuilder implements CommonQuer
   }
 
   Query handleBareFuzzy(String qfield, Token fuzzySlop, String termImage)
-      throws ParseException {
+          throws ParseException {
     Query q;
     float fms = fuzzyMinSim;
     try {
@@ -873,9 +873,9 @@ public abstract class QueryParserBase extends QueryBuilder implements CommonQuer
         f = Float.parseFloat(boost.image);
       }
       catch (Exception ignored) {
-    /* Should this be handled somehow? (defaults to "no boost", if
-     * boost number is invalid)
-     */
+        /* Should this be handled somehow? (defaults to "no boost", if
+         * boost number is invalid)
+         */
       }
 
       // avoid boosting null queries, such as those caused by stop words
@@ -979,8 +979,8 @@ public abstract class QueryParserBase extends QueryBuilder implements CommonQuer
       char c = s.charAt(i);
       // These characters are part of the query syntax and must be escaped
       if (c == '\\' || c == '+' || c == '-' || c == '!' || c == '(' || c == ')' || c == ':'
-        || c == '^' || c == '[' || c == ']' || c == '\"' || c == '{' || c == '}' || c == '~'
-        || c == '*' || c == '?' || c == '|' || c == '&' || c == '/') {
+              || c == '^' || c == '[' || c == ']' || c == '\"' || c == '{' || c == '}' || c == '~'
+              || c == '*' || c == '?' || c == '|' || c == '&' || c == '/') {
         sb.append('\\');
       }
       sb.append(c);

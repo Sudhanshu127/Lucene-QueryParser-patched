@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ValidateQuery.classic;
+package org.apache.lucene.queryparser.classic;
 
 import java.io.*;
 
@@ -51,11 +51,11 @@ public final class FastCharStream implements CharStream {
 
     if (tokenStart == 0) {        // token won't fit in buffer
       if (buffer == null) {        // first time: alloc buffer
-  buffer = new char[2048];
+        buffer = new char[2048];
       } else if (bufferLength == buffer.length) { // grow buffer
-  char[] newBuffer = new char[buffer.length*2];
-  System.arraycopy(buffer, 0, newBuffer, 0, bufferLength);
-  buffer = newBuffer;
+        char[] newBuffer = new char[buffer.length*2];
+        System.arraycopy(buffer, 0, newBuffer, 0, bufferLength);
+        buffer = newBuffer;
       }
     } else {            // shift token to front
       System.arraycopy(buffer, tokenStart, buffer, 0, newPosition);
@@ -67,7 +67,7 @@ public final class FastCharStream implements CharStream {
     tokenStart = 0;
 
     int charsRead =          // fill space in buffer
-      input.read(buffer, newPosition, buffer.length-newPosition);
+            input.read(buffer, newPosition, buffer.length-newPosition);
     if (charsRead == -1)
       throw new IOException("read past eof");
     else

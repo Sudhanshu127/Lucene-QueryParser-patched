@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ValidateQuery.classic;
+package org.apache.lucene.queryparser.classic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -262,7 +262,7 @@ public class MultiFieldQueryParser extends QueryParser
 
   @Override
   protected Query getRegexpQuery(String field, String termStr)
-      throws ParseException {
+          throws ParseException {
     if (field == null) {
       List<Query> clauses = new ArrayList<>();
       for (int i = 0; i < fields.length; i++) {
@@ -311,7 +311,7 @@ public class MultiFieldQueryParser extends QueryParser
       QueryParser qp = new QueryParser(fields[i], analyzer);
       Query q = qp.parse(queries[i]);
       if (q!=null && // q never null, just being defensive
-          (!(q instanceof BooleanQuery) || ((BooleanQuery)q).clauses().size()>0)) {
+              (!(q instanceof BooleanQuery) || ((BooleanQuery)q).clauses().size()>0)) {
         bQuery.add(q, BooleanClause.Occur.SHOULD);
       }
     }
@@ -350,7 +350,7 @@ public class MultiFieldQueryParser extends QueryParser
    *  from the length of the flags array
    */
   public static Query parse(String query, String[] fields,
-      BooleanClause.Occur[] flags, Analyzer analyzer) throws ParseException {
+                            BooleanClause.Occur[] flags, Analyzer analyzer) throws ParseException {
     if (fields.length != flags.length)
       throw new IllegalArgumentException("fields.length != flags.length");
     BooleanQuery.Builder bQuery = new BooleanQuery.Builder();
@@ -358,7 +358,7 @@ public class MultiFieldQueryParser extends QueryParser
       QueryParser qp = new QueryParser(fields[i], analyzer);
       Query q = qp.parse(query);
       if (q!=null && // q never null, just being defensive
-          (!(q instanceof BooleanQuery) || ((BooleanQuery)q).clauses().size()>0)) {
+              (!(q instanceof BooleanQuery) || ((BooleanQuery)q).clauses().size()>0)) {
         bQuery.add(q, flags[i]);
       }
     }
@@ -398,7 +398,7 @@ public class MultiFieldQueryParser extends QueryParser
    *  and flags array differ
    */
   public static Query parse(String[] queries, String[] fields, BooleanClause.Occur[] flags,
-      Analyzer analyzer) throws ParseException
+                            Analyzer analyzer) throws ParseException
   {
     if (!(queries.length == fields.length && queries.length == flags.length))
       throw new IllegalArgumentException("queries, fields, and flags array have have different length");
@@ -408,7 +408,7 @@ public class MultiFieldQueryParser extends QueryParser
       QueryParser qp = new QueryParser(fields[i], analyzer);
       Query q = qp.parse(queries[i]);
       if (q!=null && // q never null, just being defensive
-          (!(q instanceof BooleanQuery) || ((BooleanQuery)q).clauses().size()>0)) {
+              (!(q instanceof BooleanQuery) || ((BooleanQuery)q).clauses().size()>0)) {
         bQuery.add(q, flags[i]);
       }
     }

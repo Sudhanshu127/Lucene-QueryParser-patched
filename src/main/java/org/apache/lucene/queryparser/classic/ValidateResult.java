@@ -1,4 +1,4 @@
-package ValidateQuery.classic;
+package org.apache.lucene.queryparser.classic;
 
 import java.util.ArrayList;
 import java.util.List;

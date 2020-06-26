@@ -302,4 +302,4 @@
  * <pre class="code">\(1\+1\)\:2</pre>
  * </div>
  */
-package ValidateQuery.classic;
+package org.apache.lucene.queryparser.classic;
