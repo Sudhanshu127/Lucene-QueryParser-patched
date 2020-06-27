@@ -45,8 +45,8 @@ Class that handles validating a string query.
 
 | Function | Description | parameters | return type |
 | -------- | ----------- | ---------- | ----------- |
-| setMapping | set the corresponding mapping to validate upon | Mapping | void |
-| validateQuery | validate the string query | String | ValidateResult |
+| setMapping | set the corresponding mapping to validate upon | [Mapping](#mapping) | void |
+| validateQuery | validate the string query | String | [ValidateResult](#validateResult) |
 
 
 #### ValidateResult
@@ -89,7 +89,7 @@ SubClass To build ValidateResult
 | errorToken | set first error token | String | ValidateResult.Builder |
 | addExpectedToken | add an expected token | String | ValidateResult.Builder |
 | removeExpectedToken | remove a valid token | String | ValidateResult.Builder |
-| build | convert to ValidateResult | | ValidateResult |
+| build | convert to ValidateResult | | [ValidateResult](#validateResult) |
 
 
 #### Mapping
