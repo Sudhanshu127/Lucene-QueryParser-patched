@@ -4,6 +4,8 @@ Creating a syntactical and lexical validator for a query in elasticsearch 7.7 ba
 ### About
 The code has been used from [https://github.com/apache/lucene-solr/tree/master/lucene/queryparser/src/java/org/apache/lucene/queryparser](https://github.com/apache/lucene-solr/tree/master/lucene/queryparser/src/java/org/apache/lucene/queryparser)  
 
+To check how the code works read [Working](./Working.md)
+
 ### File Changes
 * <strong>ParseException</strong>
     * Returns "Syntax Error" 
