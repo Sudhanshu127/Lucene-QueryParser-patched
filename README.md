@@ -18,6 +18,15 @@ To check how the code works read [Working](./Working.md)
     * Handles ParseException by retrieving expected token images
     * Handles TokenMgrError by parsing into ParseException
 
+### Building a jar file
+
+```
+git clone https://github.com/Sudhanshu127/Lucene-QueryParser-patched.git
+cd Lucene-QueryParser-patched
+./gradlew build
+```
+You can find the jar in build/libs
+
 ### Using
 
 ```

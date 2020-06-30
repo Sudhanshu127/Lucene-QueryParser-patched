@@ -1,6 +1,7 @@
 .gradle
 .idea
-build
+build/*
+!build/libs
 gradle
 out
 src/test/resources/queries.txt
