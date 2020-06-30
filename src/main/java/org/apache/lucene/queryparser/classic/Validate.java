@@ -10,15 +10,12 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 public class Validate {
     private static final QueryParser queryParser = new QueryParser("*", new StandardAnalyzer());
 
-    public void setMapping(Mapping mapping){
-        if(mapping == null){
-            mapping = new Mapping();
-        }
+    public static void setMapping(Mapping mapping){
         mapping.fields.add("*");
         queryParser.setMapping(mapping);
     }
 
-    public ValidateResult validateQuery(String query){
+    public static ValidateResult validateQuery(String query){
         try{
             queryParser.parse(query);
         }
@@ -54,6 +51,13 @@ public class Validate {
 
             return builder.build();
         }
+        catch (Exception e){
+            ValidateResult.Builder builder = new ValidateResult.Builder(false);
+            builder.type(e.getMessage())
+                    .query(query);
+            return builder.build();
+        }
+
         return new ValidateResult.Builder(true).build();
     }
 }
